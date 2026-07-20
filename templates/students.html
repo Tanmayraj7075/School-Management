@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Students</title>
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/students.css') }}">
+</head>
+<body>
+
+<h1>Students Management</h1>
+
+<form action="/add_student" method="POST">
+
+    <input
+        type="text"
+        name="student_id"
+        placeholder="Student ID"
+        required
+    >
+
+    <input
+        type="text"
+        name="name"
+        placeholder="Name"
+        required
+    >
+
+    <input
+        type="text"
+        name="class"
+        placeholder="Class"
+        required
+    >
+
+    <input
+        type="text"
+        name="phone"
+        placeholder="Phone"
+        required
+    >
+
+    <input
+        type="date"
+        name="dob"
+        required
+    >
+
+    <button type="submit">
+        Add Student
+    </button>
+
+</form>
+
+<br><br>
+
+<table border="1">
+
+<tr>
+    <th>ID</th>
+    <th>Student ID</th>
+    <th>Name</th>
+    <th>Class</th>
+    <th>Phone</th>
+    <th>DOB</th>
+    <th>Action</th>
+</tr>
+
+{% for student in students %}
+
+<tr>
+
+    <td>{{ student.id }}</td>
+
+    <td>{{ student.student_id }}</td>
+
+    <td>{{ student.name }}</td>
+
+    <td>{{ student.class_name }}</td>
+
+    <td>{{ student.phone }}</td>
+
+    <td>{{ student.dob }}</td>
+
+    <td>
+
+        <a href="/delete_student/{{ student.id }}"
+          onclick="return confirmDelete();">
+          Delete
+        </a>
+
+    </td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br>
+
+<a href="/dashboard">
+    Dashboard
+</a>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Timetable Management</title>
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/timetable.css') }}">
+</head>
+<body>
+
+<h1>Timetable Management</h1>
+
+<form action="/add_timetable" method="POST">
+
+    <input type="text" name="day_name" placeholder="Day" required>
+    <input type="text" name="period1" placeholder="Period 1" required>
+    <input type="text" name="period2" placeholder="Period 2" required>
+    <input type="text" name="period3" placeholder="Period 3" required>
+    <input type="text" name="period4" placeholder="Period 4" required>
+    <input type="text" name="period5" placeholder="Period 5" required>
+    <input type="text" name="period6" placeholder="Period 6" required>
+
+    <button type="submit">
+        Add Timetable
+    </button>
+
+</form>
+
+<br><br>
+
+<table border="1">
+
+<tr>
+    <th>ID</th>
+    <th>Day</th>
+    <th>P1</th>
+    <th>P2</th>
+    <th>P3</th>
+    <th>P4</th>
+    <th>P5</th>
+    <th>P6</th>
+    <th>Action</th>
+</tr>
+
+{% for row in timetable %}
+
+<tr>
+
+<td>{{ row.id }}</td>
+<td>{{ row.day_name }}</td>
+<td>{{ row.period1 }}</td>
+<td>{{ row.period2 }}</td>
+<td>{{ row.period3 }}</td>
+<td>{{ row.period4 }}</td>
+<td>{{ row.period5 }}</td>
+<td>{{ row.period6 }}</td>
+
+<td>
+<a href="/delete_timetable/{{ row.id }}">
+Delete
+</a>
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br>
+
+<a href="/dashboard">
+Dashboard
+</a>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

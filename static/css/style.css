@@ -1,0 +1,226 @@
+/* style.css */
+
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI",sans-serif;
+}
+
+
+
+body{
+    min-height:100vh;
+
+    background:url("/static/image/Front_School.jpg");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
+    /* Horizontal scrolling fix */
+    overflow-x:hidden;
+}
+
+
+
+/* Top Navbar */
+.navbar{
+    width:100%;
+    padding:20px 50px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(255,255,255,0.3);
+}
+
+
+
+.logo{
+    color:rgb(54, 226, 228);
+    font-size:30px;
+    font-weight:bold;
+    text-shadow:2px 2px 8px black;
+}
+
+
+
+
+/* Buttons */
+
+
+.nav-buttons a{
+    text-decoration:none;
+    color:white;
+    background:#a0f4be;
+    padding:12px 25px;
+    margin-left:15px;
+    border-radius:25px;
+    font-weight:bold;
+    transition:0.4s;
+    display:inline-block;
+}
+
+
+
+.nav-buttons a:hover{
+    background:#00c6ff;
+    transform:translateY(-5px) scale(1.08);
+    box-shadow:0 8px 20px rgba(0,0,0,0.4);
+}
+
+
+
+
+
+
+/* Moving Text Container */
+
+.moving-container{
+    width:100%;
+    overflow:hidden;
+    margin-top:30px;
+}
+
+
+
+/* Moving Heading */
+
+.moving-text{
+    color:white;
+    font-size:38px;
+    font-weight:bold;
+    white-space:nowrap;
+    display:inline-block;
+    animation:moveText 15s linear infinite;
+    text-shadow:2px 2px 10px black;
+}
+
+
+
+@keyframes moveText{
+    from{
+        transform:translateX(100vw);
+    }
+
+    to{
+        transform:translateX(-100%);
+    }
+}
+
+
+
+
+/* Center School Information */
+
+.school-card{
+
+    width:600px;
+    max-width:90%;
+    margin:80px auto;
+    padding:35px;
+    background:rgba(255,255,255,0.18);
+    backdrop-filter:blur(15px);
+    border-radius:25px;
+    border:1px solid rgba(255,255,255,0.3);
+    text-align:center;
+    box-shadow:
+    0 0 10px rgba(255,255,255,0.3);
+    animation:glowEffect 3s infinite ease-in-out;
+    transition:0.4s;
+}
+
+
+
+/* Glow Animation */
+
+@keyframes glowEffect{
+    0%{
+        box-shadow:
+        0 0 10px rgba(255,255,255,0.3);
+    }
+
+
+    50%{
+        box-shadow:
+        0 0 30px rgba(0,212,255,0.8),
+        0 0 50px rgba(0,212,255,0.5);
+    }
+
+
+    100%{
+        box-shadow:
+        0 0 10px rgba(255,255,255,0.3);
+    }
+}
+
+
+
+.school-card:hover{
+    transform:translateY(-10px);
+}
+
+
+
+
+.school-card h2{
+    color:white;
+    font-size:32px;
+    margin-bottom:20px;
+}
+
+
+
+.school-card p{
+    color:white;
+    font-size:18px;
+    line-height:1.8;
+}
+
+
+
+.school-card span{
+    display:inline-block;
+    margin-top:10px;
+    font-size:22px;
+    font-weight:bold;
+    color:#5eff00;
+    text-shadow:
+    0 0 10px #00eaff;
+}
+
+
+
+/* Footer */
+footer{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    padding:15px;
+    text-align:center;
+    color:white;
+    background:rgba(0,0,0,0.5);
+}
+
+
+
+/* Mobile */
+@media(max-width:700px){
+    .navbar{
+        flex-direction:column;
+    }
+
+    .logo{
+        font-size:22px;
+    }
+
+    .moving-text{
+        font-size:25px;
+    }
+
+    .school-card{
+        margin-top:40px;
+    }
+}
