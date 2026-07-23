@@ -50,15 +50,14 @@ def register_user():
     
 
     cursor.execute ("""
-        INSERT INTO users
-        (fullname,email,password)
-        VALUES(%s,%s,%s)
+            INSERT INTO users
+            (fullname,email,password)
+            VALUES(%s,%s,%s)
         """,
         (fullname,email,password)
     )
         
     conn.commit()
-
     return redirect("/success")
 
 
@@ -184,12 +183,12 @@ def add_student():
     )
 
     conn.commit()
-
     return redirect("/students")
 
 
 
 # =========================================================
+# Delete Student
 # =========================================================
 @app.route("/delete_student/<int:id>")
 def delete_student(id):
@@ -200,9 +199,7 @@ def delete_student(id):
     )
 
     conn.commit()
-
     return redirect("/students")
-
 
 
 
@@ -230,6 +227,7 @@ def teachers():
 
 
 # =========================================================
+# Add Teacher
 # =========================================================
 @app.route("/add_teacher", methods=["POST"])
 def add_teacher():
@@ -240,30 +238,22 @@ def add_teacher():
     class_name = request.form["class"]
     email = request.form["email"]
 
-    query = """
-    INSERT INTO teachers
-    (teacher_id,name,subject_name,class_name,email)
-    VALUES(%s,%s,%s,%s,%s)
-    """
 
-    cursor.execute(
-        query,
-        (
-            teacher_id,
-            name,
-            subject_name,
-            class_name,
-            email
-        )
+    cursor.execute("""
+            INSERT INTO teachers
+            (teacher_id,name,subject_name,class_name,email)
+            VALUES(%s,%s,%s,%s,%s)
+        """,
+        (teacher_id, name, subject_name, class_name, email)
     )
 
     conn.commit()
-
     return redirect("/teachers")
 
 
 
 # =========================================================
+# Delete Teacher
 # =========================================================
 @app.route("/delete_teacher/<int:id>")
 def delete_teacher(id):
@@ -274,7 +264,6 @@ def delete_teacher(id):
     )
 
     conn.commit()
-
     return redirect("/teachers")
 
 
@@ -316,27 +305,16 @@ def add_timetable():
     period5 = request.form["period5"]
     period6 = request.form["period6"]
 
-    query = """
-    INSERT INTO timetable
-    (day_name,period1,period2,period3,period4,period5,period6)
-    VALUES(%s,%s,%s,%s,%s,%s,%s)
-    """
 
-    cursor.execute(
-        query,
-        (
-            day_name,
-            period1,
-            period2,
-            period3,
-            period4,
-            period5,
-            period6
-        )
+    cursor.execute("""
+            INSERT INTO timetable
+            (day_name,period1,period2,period3,period4,period5,period6)
+            VALUES(%s,%s,%s,%s,%s,%s,%s)
+        """,
+        (day_name, period1, period2, period3, period4, period5, period6)
     )
 
     conn.commit()
-
     return redirect("/timetable")
 
 
@@ -352,7 +330,6 @@ def delete_timetable(id):
     )
 
     conn.commit()
-
     return redirect("/timetable")
 
 
