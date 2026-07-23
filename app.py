@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, session
 from db import conn, cursor
-from werkzeug.security import check_password_hash, generate_password_hash
+
 
 app = Flask(__name__)
 app.secret_key = "school_secret_key"
