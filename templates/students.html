@@ -5,103 +5,72 @@
     <link rel="stylesheet"
     href="{{ url_for('static', filename='css/students.css') }}">
 </head>
+
 <body>
 
-<h1>Students Management</h1>
+    <h1>Students Management</h1>
 
-<form action="/add_student" method="POST">
+    <form action="/add_student" method="POST">
 
-    <input
-        type="text"
-        name="student_id"
-        placeholder="Student ID"
-        required
-    >
+        <input type="text" name="student_id" placeholder="Student ID" required >
 
-    <input
-        type="text"
-        name="name"
-        placeholder="Name"
-        required
-    >
+        <input type="text" name="name" placeholder="Name" required >
 
-    <input
-        type="text"
-        name="class"
-        placeholder="Class"
-        required
-    >
+        <input type="text" name="class" placeholder="Class" required >
 
-    <input
-        type="text"
-        name="phone"
-        placeholder="Phone"
-        required
-    >
+        <input type="text" name="phone" placeholder="Phone" required >
 
-    <input
-        type="date"
-        name="dob"
-        required
-    >
+        <input type="date" name="dob" required >
 
-    <button type="submit">
-        Add Student
-    </button>
+        <button type="submit"> Add Student </button>
 
-</form>
+    </form>
 
-<br><br>
+    <br><br>
 
-<table border="1">
 
-<tr>
-    <th>ID</th>
-    <th>Student ID</th>
-    <th>Name</th>
-    <th>Class</th>
-    <th>Phone</th>
-    <th>DOB</th>
-    <th>Action</th>
-</tr>
+    <table border="1">
 
-{% for student in students %}
+        <tr>
+            <th>ID</th>
+            <th>Student ID</th>
+            <th>Name</th>
+            <th>Class</th>
+            <th>Phone</th>
+            <th>DOB</th>
+            <th>Action</th>
+        </tr>
 
-<tr>
+        {% for student in students %}
 
-    <td>{{ student.id }}</td>
+        <tr>
 
-    <td>{{ student.student_id }}</td>
+            <td>{{ student.id }}</td>
+            <td>{{ student.student_id }}</td>
+            <td>{{ student.name }}</td>
+            <td>{{ student.class_name }}</td>
+            <td>{{ student.phone }}</td>
+            <td>{{ student.dob }}</td>
 
-    <td>{{ student.name }}</td>
+            <td>
+                <a href="/delete_student/{{ student.id }}"
+                onclick="return confirmDelete();">
+                Delete
+                </a>
+            </td>
 
-    <td>{{ student.class_name }}</td>
+        </tr>
 
-    <td>{{ student.phone }}</td>
+        {% endfor %}
 
-    <td>{{ student.dob }}</td>
+    </table>
 
-    <td>
+    <br>
 
-        <a href="/delete_student/{{ student.id }}"
-          onclick="return confirmDelete();">
-          Delete
-        </a>
+    <a href="/dashboard">
+        Dashboard
+    </a>
 
-    </td>
-
-</tr>
-
-{% endfor %}
-
-</table>
-
-<br>
-
-<a href="/dashboard">
-    Dashboard
-</a>
-
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

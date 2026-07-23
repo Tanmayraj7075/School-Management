@@ -1,34 +1,42 @@
 from flask import Flask, render_template, request, redirect, session
 from db import conn, cursor
-from werkzeug.security import generate_password_hash
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 app = Flask(__name__)
 app.secret_key = "school_secret_key"
 
+
+
+
+# =========================================================
+# Home Page
+# =========================================================
 @app.route("/")
 def home():
     return render_template("index.html")
 
 
 
+
+# =========================================================
 # Registration Page Open
+# =========================================================
 @app.route("/register")
 def register():
     return render_template("register.html")
 
 
-# Save User in MySQL
+
+
+# =========================================================
+# Save User in MySQL -----------> Register Page
+# =========================================================
 @app.route("/register_user", methods=["POST"])
 def register_user():
 
     fullname = request.form["fullname"]
     email = request.form["email"]
-    phone = request.form["phone"]
-    class_name = request.form["class"]
-    password = generate_password_hash(
-        request.form["password"]
-    )
+    password = request.form["password"]
 
     cursor.execute(
         "SELECT * FROM users WHERE email=%s",
@@ -41,36 +49,45 @@ def register_user():
         return "Email Already Registered"
     
 
-    query = """
-    INSERT INTO users
-    (fullname,email,phone,class_name,password)
-    VALUES(%s,%s,%s,%s,%s)
-    """
-
-    cursor.execute(
-        query,
-        (fullname,email,phone,class_name,password)
+    cursor.execute ("""
+        INSERT INTO users
+        (fullname,email,password)
+        VALUES(%s,%s,%s)
+        """,
+        (fullname,email,password)
     )
-
+        
     conn.commit()
 
     return redirect("/success")
 
 
+
+
+# =========================================================
 # Success Page
+# =========================================================
 @app.route("/success")
 def success():
     return render_template("success.html")
 
 
 
+
+
+# =========================================================
 # Login Page
+# =========================================================
 @app.route("/login")
 def login():
     return render_template("login.html")
 
 
 
+
+# =========================================================
+# LogIn Process
+# =========================================================
 @app.route("/login_user", methods=["POST"])
 def login_user():
 
@@ -84,13 +101,8 @@ def login_user():
 
     user = cursor.fetchone()
 
-    if user and check_password_hash(
-        user["password"],
-        password
-    ):
-
+    if user :
         session["user"] = user["fullname"]
-
         return redirect("/dashboard")
 
     return "Invalid Email or Password"
@@ -98,7 +110,10 @@ def login_user():
 
 
 
+
+# =========================================================
 # Dashboard Page
+# =========================================================
 @app.route("/dashboard")
 def dashboard():
 
@@ -127,7 +142,9 @@ def dashboard():
 
 
 
+# =========================================================
 # Students Page
+# =========================================================
 @app.route("/students")
 def students():
 
@@ -144,6 +161,10 @@ def students():
     )
 
 
+
+# =========================================================
+# Add Student
+# =========================================================
 @app.route("/add_student", methods=["POST"])
 def add_student():
 
@@ -153,21 +174,13 @@ def add_student():
     phone = request.form["phone"]
     dob = request.form["dob"]
 
-    query = """
-    INSERT INTO students
-    (student_id,name,class_name,phone,dob)
-    VALUES(%s,%s,%s,%s,%s)
-    """
 
-    cursor.execute(
-        query,
-        (
-            student_id,
-            name,
-            class_name,
-            phone,
-            dob
-        )
+    cursor.execute("""
+            INSERT INTO students
+            (student_id,name,class_name,phone,dob)
+            VALUES(%s,%s,%s,%s,%s)
+        """,
+        (student_id, name, class_name, phone, dob)
     )
 
     conn.commit()
@@ -175,6 +188,9 @@ def add_student():
     return redirect("/students")
 
 
+
+# =========================================================
+# =========================================================
 @app.route("/delete_student/<int:id>")
 def delete_student(id):
 
@@ -193,8 +209,9 @@ def delete_student(id):
 
 
 
-
+# =========================================================
 # Teachers Page
+# =========================================================
 @app.route("/teachers")
 def teachers():
 
@@ -211,6 +228,9 @@ def teachers():
     )
 
 
+
+# =========================================================
+# =========================================================
 @app.route("/add_teacher", methods=["POST"])
 def add_teacher():
 
@@ -243,6 +263,8 @@ def add_teacher():
 
 
 
+# =========================================================
+# =========================================================
 @app.route("/delete_teacher/<int:id>")
 def delete_teacher(id):
 
@@ -260,7 +282,9 @@ def delete_teacher(id):
 
 
 
+# =========================================================
 # Time Table
+# =========================================================
 @app.route("/timetable")
 def timetable():
 
@@ -277,6 +301,10 @@ def timetable():
     )
 
 
+
+# =========================================================
+# Add Time Table
+# =========================================================
 @app.route("/add_timetable", methods=["POST"])
 def add_timetable():
 
@@ -312,7 +340,9 @@ def add_timetable():
     return redirect("/timetable")
 
 
-
+# =========================================================
+# Delete Time Table
+# =========================================================
 @app.route("/delete_timetable/<int:id>")
 def delete_timetable(id):
 
@@ -330,24 +360,14 @@ def delete_timetable(id):
 
 
 
-
+# =========================================================
 # Logout
+# =========================================================
 @app.route("/logout")
 def logout():
-
     session.clear()
-
-    return redirect("/login")
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
+    return redirect("/")
 
 
 
-
-
-
-
-
-# start chrome http://127.0.0.1:5000
+app.run(debug=True)
